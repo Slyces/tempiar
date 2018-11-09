@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="fastsim" type="simu_fastsim" name="simu_fastsim" output="screen">
+    <param name="settings" type="str" value="$(find fastsim)/envs/entonnoir.xml"/>
+    <param name="path" type="str" value="$(find fastsim)/envs"/>
+    <param name="frequency" type="int" value="100"/>
+  </node>
+</launch>

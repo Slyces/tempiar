@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<fastsim>
+  <display enable="true"/>
+  <!-- world -->
+  <map name="arena_empty.pbm" size="600"/>
+  <robot x="300" y="300" theta="0" diameter="20"/>
+  <illuminated_switch x="150" y="50" color="2" radius="10" on="true"/>
+
+
+</fastsim>

@@ -1,0 +1,4 @@
+Rapport de TME Stratégies de Navigation
+
+Sélection : changer quand s change, on change de stratégie toutes les deux secondes
+2 secondes = 20 steps

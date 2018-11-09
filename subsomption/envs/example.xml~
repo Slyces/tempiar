@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<fastsim>
+  <display enable="true"/>
+  <!-- world -->
+  <map name="arena2.pbm" size="600"/>
+  <robot x="300" y="300" theta="0" diameter="20"/>
+  
+  <!-- sensors (optionals) -->
+  <laser_scanner angle_min="-50" angle_max="50" angle_inc="1" range="3000"/>
+
+</fastsim>

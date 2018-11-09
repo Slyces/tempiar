@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>subsomption</name>
+  <version>1.0.0</version>
+  <description>Paquetage pour le TME sur l'architecture de subsomption.</description>
+
+  <maintainer email="stephane.doncieux@upmc.fr">Stephane Doncieux</maintainer>
+  <license>CeCILL</license>
+
+
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/vehicles_subsomption</url> -->
+
+
+  <!-- Author tags are optional, mutiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintianers, but could be -->
+  <!-- Example: -->
+  <author email="stephane.doncieux@upmc.fr">Stephane Doncieux</author> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+
+</package>
