@@ -104,42 +104,42 @@ def radarGuidance():
 
         # if the goal i in front of the robot :
         if wallTooCloseF:
-          rospy.loginfo('WALL F')
+          # rospy.loginfo('WALL F')
           v.speed_left =  -v_fwd
           v.speed_right = -v_fwd
         elif bumper_r or wallTooCloseR:
-          rospy.loginfo('WALL R')
+          # rospy.loginfo('WALL R')
           v.speed_left =  v_fwd
           v.speed_right = -v_fwd
         elif bumper_l or wallTooCloseL:
-          rospy.loginfo('WALL L')
+          # rospy.loginfo('WALL L')
           v.speed_left =  -v_fwd
           v.speed_right = v_fwd 
         elif (7 in radars_list) :
-          rospy.loginfo('FWD L')
+          # rospy.loginfo('FWD L')
           v.speed_left =  v_fwd
           v.speed_right = v_fwd*.95
         elif (0 in radars_list):
-          rospy.loginfo('FWD R')
+          # rospy.loginfo('FWD R')
           v.speed_left =  v_fwd*.95
           v.speed_right = v_fwd
         # if it is on the left :
         elif (6 in radars_list) or (5 in radars_list):
-          rospy.loginfo('LEFT')
+          # rospy.loginfo('LEFT')
           v.speed_left =  v_fwd
           v.speed_right = v_turn
         # if it is on the right :
         elif (1 in radars_list) or (2 in radars_list):
-          rospy.loginfo('RIGHT')
+          # rospy.loginfo('RIGHT')
           v.speed_left =  v_turn
           v.speed_right = v_fwd
         # if it is  behind :
         elif (3 in radars_list) :
-          rospy.loginfo('BEHIND R')
+          # rospy.loginfo('BEHIND R')
           v.speed_left =  -v_fwd
           v.speed_right = v_fwd
         elif (4 in radars_list) :
-          rospy.loginfo('BEHIND L')
+          # rospy.loginfo('BEHIND L')
           v.speed_left =  v_fwd
           v.speed_right = -v_fwd
         # publish the suggested movement

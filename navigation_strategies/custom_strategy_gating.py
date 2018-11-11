@@ -140,7 +140,7 @@ def strategy_gating(nbCh,gatingType):
     startT = rospy.get_time()
     rospy.loginfo("Start time"+str(startT))
     trial = 0
-    nbTrials = 30 # @CHANGED
+    nbTrials = 10 # @CHANGED
     trialDuration = np.zeros((nbTrials))
 
     choice = -1
@@ -155,6 +155,7 @@ def strategy_gating(nbCh,gatingType):
                                                            for b in range(2)
                                                            for c in range(2)
                                                            for d in range(8)])
+    walls = [0 for i in range(nbTrials)]
     # ------------------------------------------------------------------------ #
     # Main loop:
     while (not rospy.is_shutdown()) and (trial <nbTrials):
@@ -237,7 +238,7 @@ def strategy_gating(nbCh,gatingType):
         if gatingType=='random':
             choice = random.randrange(nbCh)
             #choice = 1
-            rospy.loginfo("Module actif: "+i2strat[choice])
+            # rospy.loginfo("Module actif: "+i2strat[choice])
             speed_l=channel[choice].speed_left
             speed_r=channel[choice].speed_right
         #------------------------------------------------
@@ -246,33 +247,33 @@ def strategy_gating(nbCh,gatingType):
             if time_of_change is None or time.time() - time_of_change >= time_step:
                 time_of_change = time.time()
                 choice = random.randrange(nbCh)
-                rospy.loginfo("randomPersist: arbitrage a coder.")
-            rospy.loginfo("Module actif: "+i2strat[choice])
+                # rospy.loginfo("randomPersist: arbitrage a coder.")
+            # rospy.loginfo("Module actif: "+i2strat[choice])
             speed_l=channel[choice].speed_left
             speed_r=channel[choice].speed_right
         #------------------------------------------------
         elif gatingType=='guidance':
-            choice = 1k
-            rospy.loginfo("Module actif: "+i2strat[choice])
+            choice = 1
+            # rospy.loginfo("Module actif: "+i2strat[choice])
             speed_l=channel[choice].speed_left
             speed_r=channel[choice].speed_right
         #------------------------------------------------
         elif gatingType=='wallFollower':
             choice = 0
-            rospy.loginfo("Module actif: "+i2strat[choice])
+            # rospy.loginfo("Module actif: "+i2strat[choice])
             speed_l=channel[choice].speed_left
             speed_r=channel[choice].speed_right
         # ----------------------- stratégie Qlearning ------------------------ #
         # @CHANGED
         elif gatingType=='qlearning':
-            new_choice = time_of_change is None or time.time() - time_of_change >= time_step \
-                    or S_t != S_tm1 :
+            new_choice = time_of_change is None or time.time() - time_of_change >= time_step or S_t != S_tm1
             # mise à jour de la Q-table
             if (new_choice or rew != 0) and S_t != '' and S_tm1 != '' :
+                if rew == -1:
+                    walls[trials] += 1
                 d_t = rew + gamma * max(Q[S_t]) - Q[S_tm1][choice]
                 Q[S_tm1][choice] += alpha * d_t
                 rew = 0 # ne plus apprendre de cette récompense
-                # print(Q[S_tm1])
             # nouveau choix
             if new_choice:
                 time_of_change = time.time()
@@ -281,9 +282,7 @@ def strategy_gating(nbCh,gatingType):
                     choice = 0 if random.random() < p0 else 1
                 else:
                     choice = random.randrange(nbCh)
-                # rospy.loginfo("qlearning: chose %d" % (choice))
             # print(sum([any([v != 0 for v in x]) for x in Q.values()]))
-            # rospy.loginfo("Module actif: "+i2strat[choice])
             speed_l=channel[choice].speed_left
             speed_r=channel[choice].speed_right
         # -------------------------------------------------------------------- #
@@ -299,19 +298,38 @@ def strategy_gating(nbCh,gatingType):
         r.sleep()
 
     # Log files opening
-    logDuration = open('DureesEssais_a_' + str(alpha)+'_b_' + str(beta) + '_g_' + str(gamma) + '_' + str(startT),'w')
+#     logDuration = open('DureesEssais_a_' + str(alpha)+'_b_' + str(beta) + '_g_' + str(gamma) + '_' + str(startT),'w')
+# 
+#     for i in range(nbTrials):
+#         rospy.loginfo('T = ' + str(trialDuration[i]))
+#         logDuration.write(str(i)+' '+str(trialDuration[i])+'\n')
 
-    for i in range(nbTrials):
-        rospy.loginfo('T = ' + str(trialDuration[i]))
-        logDuration.write(str(i)+' '+str(trialDuration[i])+'\n')
+#     logDuration.close()
+    run_name = "random"
+    # ------------------------- ecriture des qvalues ------------------------- #
+    with open('Duration_log__a_' + str(alpha) + \
+                            '_b_' + str(beta) +  \
+                            '_g_' + str(gamma) +  \
+                            '_' + run_name,'w') as d_file:
+        for i in range(nbTrials):
+            d_file.write("T{} : {}\n".format(i, trialDuration[i]))
+        d_file.write('\n')
+        
+        if gatingType=='qlearning':
+            for i in range(nbTrials):
+                d_file.write("P{} : {}\n".format(i, walls[i]))
+        d_file.write('\n')
+                
+        d_file.write("Q1 : {}\n".format(np.percentile(trialDuration, 25)))
+        d_file.write("Q2 : {}\n".format(np.percentile(trialDuration, 50)))
+        d_file.write("Q3 : {}\n".format(np.percentile(trialDuration, 75)))
 
-    logDuration.close()
 
     # ------------------------- ecriture des qvalues ------------------------- #
     with open('Qtable_values_a_' + str(alpha) + \
                            '_b_' + str(beta) +  \
                            '_g_' + str(gamma) +  \
-                           '_' + str(startT),'w') as q_file:
+                           '_' + run_name,'w') as q_file:
         q_file.write(pprint(Q))
     # ------------------------------------------------------------------------ #
 

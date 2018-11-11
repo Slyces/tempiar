@@ -136,53 +136,53 @@ def wallFollower():
           else:
             v.speed_left=   v_turn
             v.speed_right= -v_turn
-          rospy.loginfo("Wall Follower: OBSTACLE - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: OBSTACLE - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif wallTooCloseL and (not(wallTooCloseR) or distWallLMin<distWallRMin):
           lastWallOnLeft = True
           v.speed_left=  v_turn
           v.speed_right= v_fwd
           #v.speed_left=  v_fwd
           #v.speed_right= v_turn
-          rospy.loginfo("Wall Follower: L TOO CLOSE - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: L TOO CLOSE - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif wallTooCloseR and (not(wallTooCloseL) or distWallLMin>distWallRMin):
           lastWallOnLeft = False
           v.speed_left=  v_fwd
           v.speed_right= v_turn
           #v.speed_left=  v_turn
           #v.speed_right= v_fwd
-          rospy.loginfo("Wall Follower: R TOO CLOSE - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: R TOO CLOSE - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif wallOKL :
           lastWallOnLeft = True
           v.speed_left=  v_fwd
           v.speed_right= v_fwd
-          rospy.loginfo("Wall Follower: L OK - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: L OK - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif wallOKR :
           lastWallOnLeft = False
           v.speed_left=  v_fwd
           v.speed_right= v_fwd
-          rospy.loginfo("Wall Follower: R OK - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: R OK - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif wallTooFarL and (not(wallTooFarR) or distWallLMin<distWallRMin):
           lastWallOnLeft = True
           v.speed_left=  v_fwd
           v.speed_right= v_turn
           #v.speed_left=  v_turn
           #v.speed_right= v_fwd
-          rospy.loginfo("Wall Follower: L TOO FAR - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: L TOO FAR - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif wallTooFarR and (not(wallTooFarL) or distWallLMin>distWallRMin):
           lastWallOnLeft = False
           v.speed_left=  v_turn
           v.speed_right= v_fwd
           #v.speed_left=  v_fwd
           #v.speed_right= v_turn
-          rospy.loginfo("Wall Follower: R TOO FAR - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: R TOO FAR - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         elif lastWallOnLeft:
           v.speed_left=  v_fwd
           v.speed_right= v_turnf
-          rospy.loginfo("Wall Follower: LOST WALL, L - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: LOST WALL, L - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
         else:
           v.speed_left=  v_turnf
           v.speed_right= v_fwd
-          rospy.loginfo("Wall Follower: LOST WALL, R - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
+          # rospy.loginfo("Wall Follower: LOST WALL, R - Speed L:"+str(v.speed_left)+" R:"+str(v.speed_right))
 
         '''
         # OLD CODE, BEFORE FASTSIM UPDATE
