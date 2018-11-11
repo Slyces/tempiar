@@ -266,7 +266,7 @@ def strategy_gating(nbCh,gatingType):
         # @CHANGED
         elif gatingType=='qlearning':
             new_choice = time_of_change is None or time.time() - time_of_change >= time_step \
-                    or S_t != S_tm1 :
+                    or S_t != S_tm1
             # mise à jour de la Q-table
             if (new_choice or rew != 0) and S_t != '' and S_tm1 != '' :
                 d_t = rew + gamma * max(Q[S_t]) - Q[S_tm1][choice]
