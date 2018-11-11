@@ -140,7 +140,7 @@ def strategy_gating(nbCh,gatingType):
     startT = rospy.get_time()
     rospy.loginfo("Start time"+str(startT))
     trial = 0
-    nbTrials = 10 # @CHANGED
+    nbTrials = 60 # @CHANGED
     trialDuration = np.zeros((nbTrials))
 
     choice = -1
@@ -270,7 +270,7 @@ def strategy_gating(nbCh,gatingType):
             # mise à jour de la Q-table
             if (new_choice or rew != 0) and S_t != '' and S_tm1 != '' :
                 if rew == -1:
-                    walls[trials] += 1
+                    walls[trial] += 1
                 d_t = rew + gamma * max(Q[S_t]) - Q[S_tm1][choice]
                 Q[S_tm1][choice] += alpha * d_t
                 rew = 0 # ne plus apprendre de cette récompense
@@ -305,7 +305,7 @@ def strategy_gating(nbCh,gatingType):
 #         logDuration.write(str(i)+' '+str(trialDuration[i])+'\n')
 
 #     logDuration.close()
-    run_name = "random"
+    run_name = "qlearning"
     # ------------------------- ecriture des qvalues ------------------------- #
     with open('Duration_log__a_' + str(alpha) + \
                             '_b_' + str(beta) +  \
