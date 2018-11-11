@@ -5,7 +5,7 @@ from subsomption.msg import Channel
 from std_msgs.msg import Bool,Int16MultiArray
 from math import *
 from sensor_msgs.msg import LaserScan
-from custom_strategy_gating import freq, ratio
+from custom_strategy_gating import freq, ratio # @changed
 
 import random
 
@@ -50,8 +50,8 @@ def radarGuidance():
     r = rospy.Rate(freq) # 10hz
 
     # behavioral parameters:
-    v_fwd = 1.5 * ratio
-    v_turn = 0.75 * ratio
+    v_fwd = 1.5 * ratio # @CHANGED
+    v_turn = 0.75 * ratio # @CHANGED
 
     v=Channel()
     v.activated=False

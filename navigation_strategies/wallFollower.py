@@ -5,7 +5,7 @@ from subsomption.msg import Channel
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import Bool
 from math import *
-from custom_strategy_gating import freq, ratio
+from custom_strategy_gating import freq, ratio # @CHANGED
 
 import random
 
@@ -50,9 +50,9 @@ def wallFollower():
     th_wallTooClose = 20 #25
     th_wallTooFar = 30 #35
     th_neglectedWall = 40 #50
-    v_fwd = 1 * ratio
-    v_turn = 0.9 * ratio
-    v_turnf = 0.5 * ratio
+    v_fwd = 1 * ratio # @CHANGED
+    v_turn = 0.9 * ratio # @CHANGED
+    v_turnf = 0.5 * ratio # @CHANGED
 
     v=Channel()
     v.activated=False
